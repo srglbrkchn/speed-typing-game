@@ -3,7 +3,29 @@ const quoteDisplayElement = document.getElementById("quote-display");
 const quoteInputElement = document.getElementById("quote-input");
 
 quoteInputElement.addEventListener("input", () => {
-  console.log("changing");
+  const arrayQuote = quoteDisplayElement.querySelectorAll("span");
+  const arrayValue = quoteInputElement.value.split("");
+  let correct = true;
+
+  arrayQuote.forEach((characterSpan, index) => {
+    const character = arrayValue[index];
+
+    if (character == null) {
+      characterSpan.classList.remove("incorrect");
+      characterSpan.classList.remove("correct");
+      correct = false;
+    } else if (character === characterSpan.innerText) {
+      characterSpan.classList.add("correct");
+      characterSpan.classList.remove("incorrect");
+    } else {
+      characterSpan.classList.remove("correct");
+      characterSpan.classList.add("incorrect");
+      correct = false;
+    }
+  });
+  if (correct) {
+    renderNewQuote();
+  }
 });
 
 async function getQuote() {
